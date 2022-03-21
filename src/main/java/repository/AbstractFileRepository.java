@@ -25,7 +25,7 @@ public abstract class AbstractFileRepository<ID, E extends HasID<ID>> extends Ab
     @Override
     public E save(E entity) throws ValidationException {
         E result = super.save(entity);
-        if (result == null) {
+        if (result != null) {
             writeToFile(entity);
         }
         return result;

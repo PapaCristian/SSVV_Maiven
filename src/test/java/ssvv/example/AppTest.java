@@ -29,12 +29,16 @@ public class AppTest
         assertTrue( true );
     }
 
-    private void DeleteFileContents(String file) {
+    private void DeleteFileContents(String file, boolean full) {
         try {
             PrintWriter writer = new PrintWriter(file);
-            writer.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
-                    "<Entitati>\n" +
-                    "</Entitati>\n");
+            if (full) {
+                writer.print("");
+            } else {
+                writer.print("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
+                        "<Entitati>\n" +
+                        "</Entitati>\n");
+            }
             writer.close();
         } catch (Exception e) {}
     }
@@ -64,21 +68,21 @@ public class AppTest
     private StudentXMLRepository GetEmptyStudentsRepository() {
         Validator<Student> studentValidator = new StudentValidator();
         String fileName = "studenti_test.xml";
-        DeleteFileContents(fileName);
+        DeleteFileContents(fileName, false);
         return new StudentXMLRepository(studentValidator, fileName);
     }
 
     private TemaXMLRepository GetEmptyHWRepository() {
         Validator<Tema> validator = new TemaValidator();
         String fileName = "hw_test.xml";
-        DeleteFileContents(fileName);
+        DeleteFileContents(fileName, false);
         return new TemaXMLRepository(validator, fileName);
     }
 
     private NotaXMLRepository GetEmptyGradeRepository() {
         Validator<Nota> validator = new NotaValidator();
         String fileName = "grade_test.xml";
-        DeleteFileContents(fileName);
+        DeleteFileContents(fileName, false);
         return new NotaXMLRepository(validator, fileName);
     }
 
@@ -86,7 +90,7 @@ public class AppTest
     public void shouldWriteToFileValidStudent_StudentFileRepository() {
         String fileName = "studenti_test.txt";
         Validator<Student> studentValidator = new StudentValidator();
-        DeleteFileContents(fileName);
+        DeleteFileContents(fileName, true);
         StudentFileRepository fileRepository = new StudentFileRepository(studentValidator, fileName);
 
         Student validStudent = new Student("200", "Bob", 200);
@@ -99,7 +103,7 @@ public class AppTest
     public void shouldNotWriteToFileInvalidStudent_StudentFileRepository() {
         Validator<Student> studentValidator = new StudentValidator();
         String fileName = "studenti_test.txt";
-        DeleteFileContents(fileName);
+        DeleteFileContents(fileName, true);
         StudentFileRepository fileRepository = new StudentFileRepository(studentValidator, fileName);
 
         Student validStudent = new Student("200", "Alice", 1);
