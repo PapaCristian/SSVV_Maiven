@@ -228,7 +228,7 @@ public class AppTest
         Service service = GetService();
 
         assertEquals(service.saveTema(null, "Description", 4, 1), 1);
-        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 4, 1)));
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema(null, "Description", 4, 1)));
     }
 
     @Test
@@ -236,6 +236,62 @@ public class AppTest
         Service service = GetService();
 
         assertEquals(service.saveTema("", "Description", 4, 1), 1);
-        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 4, 1)));
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("", "Description", 4, 1)));
+    }
+
+    @Test
+    public void test_wbt_tc_3() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", null, 4, 1), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", null, 4, 1)));
+    }
+
+    @Test
+    public void test_wbt_tc_4() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", "", 4, 1), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "", 4, 1)));
+    }
+
+    @Test
+    public void test_wbt_tc_5() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", "Description", 0, -1), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 0, -1)));
+    }
+
+    @Test
+    public void test_wbt_tc_6() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", "Description", 15, 14), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 15, 14)));
+    }
+
+    @Test
+    public void test_wbt_tc_7() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", "Description", 1, 4), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 1, 4)));
+    }
+
+    @Test
+    public void test_wbt_tc_8() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", "Description", 4, 0), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 4, 0)));
+    }
+
+    @Test
+    public void test_wbt_tc_9() { // Valid
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", "Description", 4, 1), 0);
+        assertTrue(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 4, 1)));
     }
 }
