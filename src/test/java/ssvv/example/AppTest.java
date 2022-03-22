@@ -294,4 +294,13 @@ public class AppTest
         assertEquals(service.saveTema("1", "Description", 4, 1), 0);
         assertTrue(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 4, 1)));
     }
+
+    @Test
+    public void test_wbt_tc_10() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("1", "Description", 4, 1), 0);
+        assertEquals(service.saveTema("1", "Description 2", 5, 2), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description 2", 5, 2)));
+    }
 }
