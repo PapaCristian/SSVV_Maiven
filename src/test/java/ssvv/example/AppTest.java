@@ -57,6 +57,15 @@ public class AppTest
         return false;
     }
 
+    private boolean CheckIfAssignmentIsPresent(Iterable<Tema> iterator, Tema tema) {
+        for (Tema value : iterator) {
+            if (value.getID().equals(tema.getID()) && value.getDescriere().equals(tema.getDescriere()) && value.getStartline() == tema.getStartline() && value.getDeadline() == tema.getDeadline()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private Service GetService() {
         StudentXMLRepository fileRepository1 = GetEmptyStudentsRepository();
         TemaXMLRepository fileRepository2 = GetEmptyHWRepository();
@@ -212,5 +221,21 @@ public class AppTest
 
         assertEquals(service.saveStudent("11", "A", 938), 1);
         assertFalse(CheckIfStudentPresent(service.findAllStudents(), new Student("11", "A", 938)));
+    }
+
+    @Test
+    public void test_wbt_tc_1() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema(null, "Description", 4, 1), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 4, 1)));
+    }
+
+    @Test
+    public void test_wbt_tc_2() {
+        Service service = GetService();
+
+        assertEquals(service.saveTema("", "Description", 4, 1), 1);
+        assertFalse(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Description", 4, 1)));
     }
 }
