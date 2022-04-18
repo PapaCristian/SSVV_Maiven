@@ -135,4 +135,12 @@ public class IntegrationTest {
         assertEquals(service.saveNota("1", "1", 9.6, 6, "OK"), 0);
         assertTrue(CheckIfGradeIsPresent(service.findAllNote(), new Nota(new Pair<String, String>("1", "1"), 7.1, 6, "OK")));
     }
+
+    @Test
+    public void test_i_7() { // Grade after deadline
+        assertEquals(service.saveStudent("1", "Alice", 935), 0);
+        assertEquals(service.saveTema("1", "Homework", 5, 3), 0);
+        assertTrue(CheckIfStudentPresent(service.findAllStudents(), new Student("1", "Alice", 935)));
+        assertTrue(CheckIfAssignmentIsPresent(service.findAllTeme(), new Tema("1", "Homework", 5, 3)));
+    }
 }
